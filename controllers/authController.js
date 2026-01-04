@@ -61,7 +61,9 @@ const login = async (req, res) => {
     const userObj = user.toObject();
     delete userObj.password;
     res
-      .cookie("token", token, { httpOnly: true, sameSite: "lax" })
+      .cookie("token", token, {  httpOnly: true,
+  sameSite: "none", 
+  secure: true })
       .json({ success: true, user: userObj });
   } catch (err) {
     console.log(err);
