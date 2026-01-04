@@ -8,9 +8,9 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 const cookieOptions = {
   httpOnly: true,
-  secure: process.env.NODE_ENV === "production", // true only in prod
+  secure: process.env.NODE_ENV === "production",
   sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-  path: "/", // important for clearing
+  path: "/",
 };
 
 // --------- SIGNUP ----------
