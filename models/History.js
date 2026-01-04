@@ -1,15 +1,33 @@
 import mongoose from "mongoose";
 
-const HistorySchema = new mongoose.Schema({
-  method: String,
-  url: String,
-  headers: Object,
-  body: Object,
-  responseStatus: Number,
-  responseTime: Number,
-  createdAt: { type: Date, default: Date.now }
-});
+const SavedRequestSchema = new mongoose.Schema(
+  {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+    name: {
+      type: String,
+      required: true,
+    },
 
-const History = mongoose.model("History", HistorySchema);
+    request: {
+      method: { type: String, required: true },
+      url: { type: String, required: true },
+      headers: { type: Array, default: [] },
+      body: { type: mongoose.Schema.Types.Mixed },
+    },
 
-export default History;
+    response: {
+      status: Number,
+      time: Number,
+      size: Number,
+      headers: Object,
+      body: mongoose.Schema.Types.Mixed,
+    },
+  },
+  { timestamps: true }
+);
+
+export default mongoose.model("SavedRequest", SavedRequestSchema);

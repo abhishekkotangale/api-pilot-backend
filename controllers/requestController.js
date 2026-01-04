@@ -1,56 +1,68 @@
 import sendHttpRequest from "../utils/sendRequest.js";
-import {
-  saveHistory,
-  getAllHistory,
-  getHistoryById,
-  deleteHistory,
-  clearHistory,
-} from "../services/requestService.js";
+import History from "../models/History.js";
 
-// Send a request and save history
 const sendRequest = async (req, res) => {
-  console.log({ req: req.body });
-  const { url, method, headers, body } = req.body;
+  try {
+    const { url, method, headers, body } = req.body;
 
-  // 1. Make the actual request
-  const result = await sendHttpRequest({ url, method, headers, body });
+    const result = await sendHttpRequest({
+      url,
+      method,
+      headers,
+      body,
+    });
 
-  // 2. Save to DB
-  const history = await saveHistory({
-    method,
-    url,
-    headers,
-    body,
-    responseStatus: result.status,
-    responseTime: result.responseTime,
-  });
-
-  // 3. Return result + history id
-  res.json({ ...result, historyId: history._id });
+    res.json(result);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Request failed" });
+  }
 };
 
-// Get all history
-const getHistory = async (req, res) => {
-  const data = await getAllHistory();
-  res.json(data);
+ const saveHistory = async (req, res) => {
+  try {
+    const userId = req.user.userId; // from authMiddleware
+    const { name, request, response } = req.body;
+
+    const saved = await History.create({
+      userId,
+      name,
+      request,
+      response,
+    });
+
+    res.status(201).json(saved);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Failed to save request" });
+  }
 };
 
-// Get single history by ID
-const getSingleHistory = async (req, res) => {
-  const item = await getHistoryById(req.params.id);
-  res.json(item);
+ const getSavedHistory = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+
+    const data = await History.find({ userId }).sort({
+      createdAt: -1,
+    });
+
+    res.json(data);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to fetch saved requests" });
+  }
 };
 
-// Delete single history by ID
-const deleteSingleHistory = async (req, res) => {
-  await deleteHistory(req.params.id);
-  res.json({ message: "History deleted" });
-};
+const deleteSavedHistory = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const { id } = req.params;
 
-// Clear all history
-const clearAllHistory = async (req, res) => {
-  await clearHistory();
-  res.json({ message: "All history cleared" });
+    await History.deleteOne({ _id: id, userId });
+
+    res.json({ message: "Saved request deleted" });
+  } catch (err) {
+    res.status(500).json({ message: "Delete failed" });
+  }
 };
 
 // Simple authentication check
@@ -60,9 +72,8 @@ const authenticate = async (req, res) => {
 
 export default {
   sendRequest,
-  getHistory,
-  getSingleHistory,
-  deleteSingleHistory,
-  clearAllHistory,
+  saveHistory,
+  getSavedHistory,
+  deleteSavedHistory,
   authenticate,
 };

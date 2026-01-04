@@ -3,8 +3,6 @@ import axios from "axios";
 export default async function sendHttpRequest({ url, method, headers, body }) {
   const start = Date.now();
 
-  console.log(url);
-
   try {
     const response = await axios({
       url,
