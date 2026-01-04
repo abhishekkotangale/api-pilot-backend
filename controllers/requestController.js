@@ -21,7 +21,7 @@ const sendRequest = async (req, res) => {
 
  const saveHistory = async (req, res) => {
   try {
-    const userId = req.user.userId; // from authMiddleware
+    const userId = req.user.userId;
     const { name, request, response } = req.body;
 
     const saved = await History.create({

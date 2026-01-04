@@ -22,7 +22,6 @@ export default async function sendHttpRequest({ url, method, headers, body }) {
       headers: response.headers
     };
   } catch (err) {
-    console.log(err, "--------------");
 
     const time = Date.now() - start;
 

@@ -3,8 +3,6 @@ import controller from "../controllers/requestController.js";
 import authMiddleware from "../middleware/MiddleWare.js";
 
 const router = express.Router();
-
-// Routes
 router.post("/request/send", authMiddleware, controller.sendRequest);
 router.post("/history", authMiddleware, controller.saveHistory);
 router.get("/history", authMiddleware, controller.getSavedHistory);

@@ -20,15 +20,15 @@ const generateApiRequest = async (req, res) => {
           parts: [
             {
               text: `
-Return ONLY valid JSON.
-No markdown. No explanation.
+              Return ONLY valid JSON.
+              No markdown. No explanation.
 
-{
-  "method": "GET|POST|PUT|PATCH|DELETE",
-  "url": "",
-  "headers": { "key": "value" },
-  "body": {}
-}
+              {
+                "method": "GET|POST|PUT|PATCH|DELETE",
+                "url": "",
+                "headers": { "key": "value" },
+                "body": {}
+              }
               `,
             },
             { text: prompt },
