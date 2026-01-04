@@ -1,14 +1,16 @@
-const express = require("express");
+import express from "express";
+import controller from "../controllers/requestController.js";
+import authMiddleware from "../middleware/MiddleWare.js";
+
 const router = express.Router();
-const controller = require("../controllers/requestController");
-const authMiddleware = require("../middleware/MiddleWare");
 
 // Routes
-router.post("/request/send",authMiddleware, controller.sendRequest);
+router.post("/request/send", authMiddleware, controller.sendRequest);
 router.get("/history", authMiddleware, controller.getHistory);
-router.get("/history/:id",authMiddleware, controller.getSingleHistory);
+router.get("/history/:id", authMiddleware, controller.getSingleHistory);
 router.delete("/history/:id", authMiddleware, controller.deleteSingleHistory);
 router.delete("/history", authMiddleware, controller.clearAllHistory);
-router.get("/authenticate" , authMiddleware ,controller.authenticate)
+router.get("/authenticate", authMiddleware, controller.authenticate);
 
-module.exports = router;
+// ESM default export
+export default router;

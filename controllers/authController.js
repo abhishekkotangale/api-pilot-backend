@@ -1,12 +1,13 @@
-const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
-const { OAuth2Client } = require("google-auth-library");
-const Users = require("../models/Users");
+import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
+import { OAuth2Client } from "google-auth-library";
+import Users from "../models/Users.js";
+
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // --------- SIGNUP ----------
-exports.signup = async (req, res) => {
+const signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
@@ -33,7 +34,7 @@ exports.signup = async (req, res) => {
 };
 
 // --------- LOGIN ----------
-exports.login = async (req, res) => {
+const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -69,7 +70,7 @@ exports.login = async (req, res) => {
 };
 
 // --------- GOOGLE LOGIN ----------
-exports.googleAuth = async (req, res) => {
+const googleAuth = async (req, res) => {
   try {
     const { token } = req.body;
 
@@ -104,7 +105,7 @@ exports.googleAuth = async (req, res) => {
   }
 };
 
-exports.logout = async (req, res) => {
+const logout = async (req, res) => {
   try {
     res.clearCookie("token", { httpOnly: true, sameSite: "lax" });
     res.json({ success: true, message: "Logged out successfully" });
@@ -115,7 +116,7 @@ exports.logout = async (req, res) => {
 };
 
 // --------- AUTH CHECK ----------
-exports.authenticate = async (req, res) => {
+const authenticate = async (req, res) => {
   const token = req.cookies.token;
   if (!token) return res.json({ authenticate: false });
 
@@ -129,4 +130,12 @@ exports.authenticate = async (req, res) => {
   } catch {
     res.json({ authenticate: false });
   }
+};
+
+export default {
+  authenticate,
+  logout,
+  googleAuth,
+  login,
+  signup
 };

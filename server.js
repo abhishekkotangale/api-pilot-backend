@@ -1,12 +1,12 @@
-const express = require("express");
-const cors = require("cors");
-const connectDB = require("./config/db");
-const requestRoutes = require("./routes/requestRoutes");
-const aiRoutes = require("./routes/aiRoutes");
-const authRoutes = require("./routes/auth");
-const dotenv = require("dotenv");
-const cookieParser = require("cookie-parser");
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import cookieParser from "cookie-parser";
 
+import connectDB from "./config/db.js";
+import requestRoutes from "./routes/requestRoutes.js";
+import aiRoutes from "./routes/aiRoutes.js";
+import authRoutes from "./routes/auth.js";
 
 dotenv.config();
 const app = express();

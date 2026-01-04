@@ -1,9 +1,9 @@
-const express = require("express");
+import express from "express";
+import aiController from "../controllers/aiController.js";
+import authMiddleware from "../middleware/MiddleWare.js";
+
 const router = express.Router();
-const aiController = require("../controllers/aiController");
-const authMiddleware = require("../middleware/MiddleWare");
 
-// Routes
-router.post("/generate",authMiddleware, aiController.generateApiRequest);
+router.post("/generate", authMiddleware, aiController.generateApiRequest);
 
-module.exports = router;
+export default router; 

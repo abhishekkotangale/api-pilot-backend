@@ -4,7 +4,7 @@ const ai = new GoogleGenAI({
   apiKey: process.env.GEMINI_API_KEY,
 });
 
-export const generateApiRequest = async (req, res) => {
+const generateApiRequest = async (req, res) => {
   try {
     const { prompt } = req.body;
 
@@ -52,3 +52,5 @@ No markdown. No explanation.
     res.status(500).json({ message: "AI generation failed" });
   }
 };
+
+export default {generateApiRequest};

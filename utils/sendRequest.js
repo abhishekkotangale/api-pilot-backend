@@ -1,6 +1,6 @@
-const axios = require("axios");
+import axios from "axios";
 
-async function sendHttpRequest({ url, method, headers, body }) {
+export default async function sendHttpRequest({ url, method, headers, body }) {
   const start = Date.now();
 
   console.log(url);
@@ -12,8 +12,6 @@ async function sendHttpRequest({ url, method, headers, body }) {
       headers,
       data: body
     });
-
-    console.log(response ,"=========================================")
 
     const time = Date.now() - start;
     const size = JSON.stringify(response.data).length;
@@ -40,4 +38,3 @@ async function sendHttpRequest({ url, method, headers, body }) {
   }
 }
 
-module.exports = sendHttpRequest;
