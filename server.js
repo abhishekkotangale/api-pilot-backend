@@ -26,7 +26,7 @@ app.use("/api", requestRoutes);
 app.use("/auth", authRoutes);
 app.use("/ai",aiRoutes);
 
-app.get("/health", (req, res) => {
+app.get("/", (req, res) => {
     try {
         res.send("Server is up and running");
     } catch (e) {
