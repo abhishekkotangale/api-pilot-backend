@@ -6,6 +6,14 @@ import Users from "../models/Users.js";
 
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
+const cookieOptions = {
+  httpOnly: true,
+  secure: process.env.NODE_ENV === "production",
+  sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  path: "/",
+  domain: process.env.NODE_ENV === "production" ? ".vercel.app" : "localhost",
+};
+
 
 // --------- SIGNUP ----------
 const signup = async (req, res) => {
@@ -62,9 +70,7 @@ const login = async (req, res) => {
     const userObj = user.toObject();
     delete userObj.password;
     res
-      .cookie("token", token, {  httpOnly: true,
-  sameSite: "none", 
-  secure: true })
+      .cookie("token", token, cookieOptions)
       .json({ success: true, user: userObj });
   } catch (err) {
     console.log(err);
@@ -100,8 +106,7 @@ const googleAuth = async (req, res) => {
     });
 
     res
-      .cookie("token", myToken, { httpOnly: true,sameSite: "none", 
-  secure: true })
+      .cookie("token", myToken,cookieOptions)
       .json({ success: true, user });
   } catch (err) {
     console.log(err);
@@ -111,8 +116,7 @@ const googleAuth = async (req, res) => {
 
 const logout = async (req, res) => {
   try {
-    res.clearCookie("token", { httpOnly: true, sameSite: "none", 
-  secure: true });
+    res.clearCookie("token", cookieOptions);
     res.json({ success: true, message: "Logged out successfully" });
   } catch (err) {
     console.log(err);
