@@ -10,7 +10,7 @@ import authRoutes from "./routes/auth.js";
 
 dotenv.config();
 const app = express();
-app.use(cors({ origin: "https://api-pilot.vercel.app", credentials: true }));
+app.use(cors({ origin: "https://api-pilot-nine.vercel.app", credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 
