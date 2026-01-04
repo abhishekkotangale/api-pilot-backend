@@ -99,7 +99,8 @@ const googleAuth = async (req, res) => {
     });
 
     res
-      .cookie("token", myToken, { httpOnly: true, sameSite: "lax" })
+      .cookie("token", myToken, { httpOnly: true,sameSite: "none", 
+  secure: true })
       .json({ success: true, user });
   } catch (err) {
     console.log(err);
@@ -109,7 +110,8 @@ const googleAuth = async (req, res) => {
 
 const logout = async (req, res) => {
   try {
-    res.clearCookie("token", { httpOnly: true, sameSite: "lax" });
+    res.clearCookie("token", { httpOnly: true, sameSite: "none", 
+  secure: true });
     res.json({ success: true, message: "Logged out successfully" });
   } catch (err) {
     console.log(err);
