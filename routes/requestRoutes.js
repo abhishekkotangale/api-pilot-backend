@@ -6,9 +6,6 @@ const router = express.Router();
 
 // Routes
 router.post("/request/send", authMiddleware, controller.sendRequest);
-router.get("/authenticate", authMiddleware, controller.authenticate);
-
-
 router.post("/history", authMiddleware, controller.saveHistory);
 router.get("/history", authMiddleware, controller.getSavedHistory);
 router.delete("/history/:id", authMiddleware, controller.deleteSavedHistory);

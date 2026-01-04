@@ -65,11 +65,6 @@ const deleteSavedHistory = async (req, res) => {
   }
 };
 
-// Simple authentication check
-const authenticate = async (req, res) => {
-  res.status(200).json({ authenticate: true });
-};
-
 export default {
   sendRequest,
   saveHistory,
