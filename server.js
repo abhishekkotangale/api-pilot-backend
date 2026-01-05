@@ -28,7 +28,7 @@ app.use("/ai",aiRoutes);
 
 app.get("/", (req, res) => {
     try {
-        res.send("Server is up and running");
+        res.send("Server is up and running.");
     } catch (e) {
         res.status(500).send("Server is not running");
     }
