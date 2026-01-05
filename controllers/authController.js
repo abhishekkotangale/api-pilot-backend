@@ -11,7 +11,7 @@ const cookieOptions = {
   secure: process.env.NODE_ENV === "production",
   sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   path: "/",
-  domain: process.env.NODE_ENV === "production" ? ".vercel.app" : "localhost",
+  // domain: process.env.NODE_ENV === "production" ? ".vercel.app" : "localhost",
 };
 
 
