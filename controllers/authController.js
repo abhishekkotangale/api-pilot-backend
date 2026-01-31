@@ -69,9 +69,7 @@ const login = async (req, res) => {
     });
     const userObj = user.toObject();
     delete userObj.password;
-    res
-      .cookie("token", token, cookieOptions)
-      .json({ success: true, user: userObj });
+    res.json({ success: true, user: userObj , token: token});
   } catch (err) {
     console.log(err);
     res.status(500).json({ success: false, message: "Server error" });
@@ -105,9 +103,7 @@ const googleAuth = async (req, res) => {
       expiresIn: "7d",
     });
 
-    res
-      .cookie("token", myToken,cookieOptions)
-      .json({ success: true, user });
+     res.json({ success: true, user: userObj , token: myToken});
   } catch (err) {
     console.log(err);
     res.status(401).json({ success: false, message: "Invalid Google token" });
@@ -126,13 +122,11 @@ const logout = async (req, res) => {
 
 // --------- AUTH CHECK ----------
 const authenticate = async (req, res) => {
-  const token = req.cookies.token;
-  if (!token) return res.json({ authenticate: false });
 
   try {
-    const decode = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = req.user.userId;
 
-    const user = await Users.findOne({ _id: decode.userId });
+    const user = await Users.findOne({ _id: userId });
     const userObj = user.toObject();
     delete userObj.password;
     res.json({ authenticate: true , user: userObj });
